@@ -11,9 +11,9 @@ import org.guanzon.appdriver.base.GRider;
  *
  * @author Arsiela
  */
-public class Validator_VehicleSalesInvoice_Master implements ValidatorInterface {
+public class Validator_SalesInvoice_Master implements ValidatorInterface {
 
-    public Validator_VehicleSalesInvoice_Master(Object foValue) {
+    public Validator_SalesInvoice_Master(Object foValue) {
     }
 
     @Override
