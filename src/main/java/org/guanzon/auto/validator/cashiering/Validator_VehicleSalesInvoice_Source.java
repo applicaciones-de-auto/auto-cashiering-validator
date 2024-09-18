@@ -6,21 +6,21 @@
 package org.guanzon.auto.validator.cashiering;
 
 import org.guanzon.appdriver.base.GRider;
-import org.guanzon.auto.model.cashiering.Model_SalesInvoice_Master;
+import org.guanzon.auto.model.cashiering.Model_VehicleSalesInvoice;
 
 /**
  *
  * @author Arsiela
  */
-public class Validator_SalesInvoice_Master implements ValidatorInterface {
+public class Validator_VehicleSalesInvoice_Source implements ValidatorInterface {
 
     GRider poGRider;
     String psMessage;
     
-    Model_SalesInvoice_Master poEntity;
+    Model_VehicleSalesInvoice poEntity;
     
-    public Validator_SalesInvoice_Master(Object foValue){
-        poEntity = (Model_SalesInvoice_Master) foValue;
+    public Validator_VehicleSalesInvoice_Source(Object foValue){
+        poEntity = (Model_VehicleSalesInvoice) foValue;
     }
 
     @Override
