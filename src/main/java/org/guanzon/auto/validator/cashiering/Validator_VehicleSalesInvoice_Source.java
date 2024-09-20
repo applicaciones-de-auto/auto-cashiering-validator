@@ -78,6 +78,7 @@ public class Validator_VehicleSalesInvoice_Source implements ValidatorInterface 
                     + " LEFT JOIN si_master b ON b.sTransNox = a.sTransNox ";
             lsSQL = MiscUtil.addCondition(lsSQL, " b.cTranStat <> " + SQLUtil.toSQL(TransactionStatus.STATE_CANCELLED) 
                                                 + " AND a.sReferNox = " + SQLUtil.toSQL(poEntity.getReferNo()) 
+                                                + " AND b.sTransNox <> " + SQLUtil.toSQL(poEntity.getTransNo()) 
                                                 );
             System.out.println("EXISTING VSI CHECK: " + lsSQL);
             ResultSet loRS = poGRider.executeQuery(lsSQL);
@@ -95,7 +96,7 @@ public class Validator_VehicleSalesInvoice_Source implements ValidatorInterface 
                             + "\n\n<Invoice No:" + lsID + ">"
                             + "\n<Invoice Date:" + lsDesc + ">"
                             + "\n<Invoice Type:" + lsType + ">"
-                            + "\n\nCancellation aborted.";
+                            + "\n\nSaving aborted.";
                     return false;
             }
             
