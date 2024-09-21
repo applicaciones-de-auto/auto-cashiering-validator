@@ -1,5 +1,6 @@
 org\guanzon\auto\validator\cashiering\ValidatorFactory$1.class
+org\guanzon\auto\validator\cashiering\Validator_VehicleSalesInvoice_Source.class
 org\guanzon\auto\validator\cashiering\ValidatorFactory.class
 org\guanzon\auto\validator\cashiering\ValidatorInterface.class
+org\guanzon\auto\validator\cashiering\Validator_SalesInvoice_Master.class
 org\guanzon\auto\validator\cashiering\ValidatorFactory$TYPE.class
-org\guanzon\auto\validator\cashiering\Validator_VehicleSalesInvoice_Master.class
