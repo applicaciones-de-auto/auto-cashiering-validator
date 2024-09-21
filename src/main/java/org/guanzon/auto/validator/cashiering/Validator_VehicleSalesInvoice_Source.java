@@ -61,10 +61,10 @@ public class Validator_VehicleSalesInvoice_Source implements ValidatorInterface 
         
         
         try {
-            //check if linked with PR
+            //check if linked with VSI
             String lsID = "";
             String lsDesc = "";
-            String lsType = "";
+//            String lsType = "";
             String lsSQL =   " SELECT "                                             
                     + "   a.sTransNox "                                     
                     + " , a.sReferNox "                                     
@@ -86,7 +86,7 @@ public class Validator_VehicleSalesInvoice_Source implements ValidatorInterface 
             if (MiscUtil.RecordCount(loRS) > 0){
                     while(loRS.next()){
                         lsID = loRS.getString("sSINoxxxx");
-                        lsType = loRS.getString("sTranType"); 
+//                        lsType = loRS.getString("sTranType"); 
                         lsDesc = xsDateShort(loRS.getDate("dTransact"));
                     }
 
@@ -95,7 +95,7 @@ public class Validator_VehicleSalesInvoice_Source implements ValidatorInterface 
                     psMessage = "Found an existing vehicle sales invoice."
                             + "\n\n<Invoice No:" + lsID + ">"
                             + "\n<Invoice Date:" + lsDesc + ">"
-                            + "\n<Invoice Type:" + lsType + ">"
+//                            + "\n<Invoice Type:" + lsType + ">"
                             + "\n\nSaving aborted.";
                     return false;
             }
