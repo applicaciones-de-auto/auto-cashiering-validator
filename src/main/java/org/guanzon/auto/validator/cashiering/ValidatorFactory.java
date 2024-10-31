@@ -17,6 +17,8 @@ public class ValidatorFactory {
         , VehicleSalesInvoice
         , CashierReceivables_Master
         , CashierReceivables_Detail
+        , StatementOfAccount_Master
+        , StatementOfAccount_Detail
     }
     
     public static ValidatorInterface make(ValidatorFactory.TYPE foType, Object foValue){
@@ -29,6 +31,10 @@ public class ValidatorFactory {
                 return new Validator_CashierReceivables_Master(foValue);
             case CashierReceivables_Detail:
                 return new Validator_CashierReceivables_Detail(foValue);
+            case StatementOfAccount_Master:
+                return new Validator_StatementOfAccount_Master(foValue);
+            case StatementOfAccount_Detail:
+                return new Validator_StatementOfAccount_Detail(foValue);
             default:
                 return null;
         }
