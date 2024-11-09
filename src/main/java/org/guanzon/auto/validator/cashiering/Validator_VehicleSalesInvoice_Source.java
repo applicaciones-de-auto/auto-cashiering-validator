@@ -75,9 +75,9 @@ public class Validator_VehicleSalesInvoice_Source implements ValidatorInterface 
                     + " , b.dTransact "                      
                     + " , b.cTranStat  "                                  
                     + " FROM si_master_source a "                           
-                    + " LEFT JOIN si_master b ON b.sTransNox = a.sTransNox ";
+                    + " LEFT JOIN si_master b ON b.sTransNox = a.sReferNox ";
             lsSQL = MiscUtil.addCondition(lsSQL, " b.cTranStat <> " + SQLUtil.toSQL(TransactionStatus.STATE_CANCELLED) 
-                                                + " AND a.sReferNox = " + SQLUtil.toSQL(poEntity.getReferNo()) 
+                                                + " AND a.sSourceNo = " + SQLUtil.toSQL(poEntity.getReferNo()) 
                                                 + " AND b.sTransNox <> " + SQLUtil.toSQL(poEntity.getTransNo()) 
                                                 );
             System.out.println("EXISTING VSI CHECK: " + lsSQL);
