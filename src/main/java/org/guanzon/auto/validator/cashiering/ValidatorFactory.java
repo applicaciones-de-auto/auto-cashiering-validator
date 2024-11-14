@@ -25,6 +25,8 @@ public class ValidatorFactory {
         switch (foType) {
             case SalesInvoice_Master:
                 return new Validator_SalesInvoice_Master(foValue);
+            case SalesInvoice_Source:
+                return new Validator_SalesInvoice_Source(foValue);
             case VehicleSalesInvoice:
                 return new Validator_VehicleSalesInvoice_Source(foValue);
             case CashierReceivables_Master:
