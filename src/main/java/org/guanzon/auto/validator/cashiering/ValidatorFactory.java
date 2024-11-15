@@ -14,6 +14,8 @@ public class ValidatorFactory {
     public enum TYPE{
           SalesInvoice_Master
         , SalesInvoice_Source
+        , SalesInvoice_Payment
+        , SalesInvoice_Advances_Source
         , VehicleSalesInvoice
         , CashierReceivables_Master
         , CashierReceivables_Detail
@@ -27,6 +29,10 @@ public class ValidatorFactory {
                 return new Validator_SalesInvoice_Master(foValue);
             case SalesInvoice_Source:
                 return new Validator_SalesInvoice_Source(foValue);
+            case SalesInvoice_Payment:
+                return new Validator_SalesInvoice_Payment(foValue);
+            case SalesInvoice_Advances_Source:
+                return new Validator_SalesInvoice_Advances_Source(foValue);
             case VehicleSalesInvoice:
                 return new Validator_VehicleSalesInvoice_Source(foValue);
             case CashierReceivables_Master:
