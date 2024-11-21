@@ -5,6 +5,7 @@
  */
 package org.guanzon.auto.validator.cashiering;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -56,6 +57,11 @@ public class Validator_SalesInvoice_Payment implements ValidatorInterface {
                 return false;
             }
         }
+        
+        if(poEntity.getPayAmt().compareTo(new BigDecimal("0.00")) <= 0) {
+            psMessage = "Payment Amount is not set.";
+            return false;
+        } 
         
         if(poEntity.getPayTrnCD()== null) {
             psMessage = "Payment Mode Code is not set.";

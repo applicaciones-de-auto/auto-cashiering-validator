@@ -5,6 +5,7 @@
  */
 package org.guanzon.auto.validator.cashiering;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -55,6 +56,60 @@ public class Validator_SalesInvoice_Master implements ValidatorInterface {
                 psMessage = "Reference No is not set.";
                 return false;
             }
+        }
+        
+        if(poEntity.getBranchCd()== null) {
+            psMessage = "Branch code is not set.";
+            return false;
+        } else {
+            if (poEntity.getBranchCd().trim().isEmpty()){
+                psMessage = "Branch code is not set.";
+                return false;
+            }
+        }
+        
+        if(poEntity.getDocType()== null) {
+            psMessage = "Document type is not set.";
+            return false;
+        } else {
+            if (poEntity.getDocType().trim().isEmpty()){
+                psMessage = "Document type is not set.";
+                return false;
+            }
+        }
+        
+        if(poEntity.getClientID()== null) {
+            psMessage = "Payer is not set.";
+            return false;
+        } else {
+            if (poEntity.getClientID().trim().isEmpty()){
+                psMessage = "Payer is not set.";
+                return false;
+            }
+        }
+        
+        if(poEntity.getTranTotl().compareTo(new BigDecimal("0.00")) <= 0){
+            psMessage = "Invalid Transaction Total.";
+            return false;
+        }
+        
+        if(poEntity.getNetTotal().compareTo(new BigDecimal("0.00")) <= 0){
+            psMessage = "Invalid Net Total.";
+            return false;
+        }
+        
+        if(poEntity.getCashAmt().compareTo(new BigDecimal("0.00")) <= 0
+            && poEntity.getChckAmt().compareTo(new BigDecimal("0.00")) <= 0
+            && poEntity.getCardAmt().compareTo(new BigDecimal("0.00")) <= 0
+            && poEntity.getOthrAmt().compareTo(new BigDecimal("0.00")) <= 0
+            && poEntity.getGiftAmt().compareTo(new BigDecimal("0.00")) <= 0){
+            psMessage = "Invalid Payer Mode Amount.";
+            return false;
+        }
+        
+        if(poEntity.getAmtPaid().compareTo(new BigDecimal("0.00")) <= 0){
+            psMessage = "Invalid Amount Paid.";
+            return false;
         }
         
         try {
