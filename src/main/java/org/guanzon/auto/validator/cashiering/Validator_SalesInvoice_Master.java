@@ -49,11 +49,11 @@ public class Validator_SalesInvoice_Master implements ValidatorInterface {
         }
         
         if(poEntity.getReferNo()== null) {
-            psMessage = "Reference No is not set.";
+            psMessage = "Receipt No is not set.";
             return false;
         } else {
             if (poEntity.getReferNo().trim().isEmpty()){
-                psMessage = "Reference No is not set.";
+                psMessage = "Receipt No is not set.";
                 return false;
             }
         }
