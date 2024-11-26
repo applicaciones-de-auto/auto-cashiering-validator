@@ -98,20 +98,21 @@ public class Validator_SalesInvoice_Master implements ValidatorInterface {
             return false;
         }
         
-        if(poEntity.getCashAmt().compareTo(new BigDecimal("0.00")) <= 0
-            && poEntity.getChckAmt().compareTo(new BigDecimal("0.00")) <= 0
-            && poEntity.getCardAmt().compareTo(new BigDecimal("0.00")) <= 0
-            && poEntity.getOthrAmt().compareTo(new BigDecimal("0.00")) <= 0
-            && poEntity.getGiftAmt().compareTo(new BigDecimal("0.00")) <= 0){
-            psMessage = "Invalid Payer Mode Amount.";
-            return false;
+        if(!poEntity.getDocType().equals("0")){
+            if(poEntity.getCashAmt().compareTo(new BigDecimal("0.00")) <= 0
+                && poEntity.getChckAmt().compareTo(new BigDecimal("0.00")) <= 0
+                && poEntity.getCardAmt().compareTo(new BigDecimal("0.00")) <= 0
+                && poEntity.getOthrAmt().compareTo(new BigDecimal("0.00")) <= 0
+                && poEntity.getGiftAmt().compareTo(new BigDecimal("0.00")) <= 0){
+                psMessage = "Invalid Payer Mode Amount.";
+                return false;
+            }
+            if(poEntity.getAmtPaid().compareTo(new BigDecimal("0.00")) <= 0){
+                psMessage = "Invalid Amount Paid.";
+                return false;
+            }
         }
-        
-        if(poEntity.getAmtPaid().compareTo(new BigDecimal("0.00")) <= 0){
-            psMessage = "Invalid Amount Paid.";
-            return false;
-        }
-        
+
         try {
             String lsID = "";
             String lsSQL = poEntity.getSQL();
