@@ -58,7 +58,41 @@ public class Validator_SalesInvoice_Advances_Source implements ValidatorInterfac
             }
         }
         
-        if(poEntity.getSourceCD()== null) {
+//        if(poEntity.getSourceCD() != null) {
+//            if (!poEntity.getSourceCD().trim().isEmpty()){
+//                if(poEntity.getSourceNo()== null) {
+//                    psMessage = "Source No is not set.";
+//                    return false;
+//                } else {
+//                    if (poEntity.getSourceNo().trim().isEmpty()){
+//                        psMessage = "Source No is not set.";
+//                        return false;
+//                    }
+//                }
+//
+//                if(poEntity.getTranType()== null) {
+//                    psMessage = "Transtype is not set.";
+//                    return false;
+//                } else {
+//                    if (poEntity.getTranType().trim().isEmpty()){
+//                        psMessage = "Transtype is not set.";
+//                        return false;
+//                    }
+//                }
+//                
+//                if(poEntity.getEntryNo() == null){
+//                    psMessage = "Invalid SI row to be deduct.";
+//                    return false;
+//                } else {
+//                    if(poEntity.getEntryNo() <= 0){
+//                        psMessage = "Invalid SI row to be deduct.";
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
+        
+        if(poEntity.getSourceCD() == null) {
             psMessage = "Source Code is not set.";
             return false;
         } else {
@@ -93,7 +127,7 @@ public class Validator_SalesInvoice_Advances_Source implements ValidatorInterfac
             return false;
         }
         
-        
+//        
         if(poEntity.getEntryNo() == null){
             psMessage = "Invalid SI row to be deduct.";
             return false;

@@ -1,12 +1,13 @@
-D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_Creditcard_Trans.java
-D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_CashierReceivables_Detail.java
 D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_StatementOfAccount_Master.java
 D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_SalesInvoice_Payment.java
 D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_SalesInvoice_Source.java
 D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\ValidatorFactory.java
+D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_CashierReceivables_Master.java
+D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_StatementOfAccount_Detail.java
+D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_Gift_Check.java
+D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_Creditcard_Trans.java
+D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_CashierReceivables_Detail.java
 D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_SalesInvoice_Advances_Source.java
 D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_SalesInvoice_Master.java
 D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_VehicleSalesInvoice_Source.java
-D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_CashierReceivables_Master.java
 D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\ValidatorInterface.java
-D:\Guanzon\GMC SEG Folder - Maven\auto-cashiering-validator\src\main\java\org\guanzon\auto\validator\cashiering\Validator_StatementOfAccount_Detail.java

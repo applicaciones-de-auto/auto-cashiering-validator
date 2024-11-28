@@ -41,25 +41,25 @@ public class Validator_Gift_Check implements ValidatorInterface {
             }
         }
         
-        if(poEntity.getSourceCD()== null) {
-            psMessage = "Source Code is not set.";
-            return false;
-        } else {
-            if (poEntity.getSourceCD().trim().isEmpty()){
-                psMessage = "Source Code is not set.";
-                return false;
-            }
-        }
-        
-        if(poEntity.getSourceNo()== null) {
-            psMessage = "Transaction Source is not set.";
-            return false;
-        } else {
-            if (poEntity.getSourceNo().trim().isEmpty()){
-                psMessage = "Transaction Source is not set.";
-                return false;
-            }
-        }
+//        if(poEntity.getSourceCD()== null) {
+//            psMessage = "Source Code is not set.";
+//            return false;
+//        } else {
+//            if (poEntity.getSourceCD().trim().isEmpty()){
+//                psMessage = "Source Code is not set.";
+//                return false;
+//            }
+//        }
+//        
+//        if(poEntity.getSourceNo()== null) {
+//            psMessage = "Transaction Source is not set.";
+//            return false;
+//        } else {
+//            if (poEntity.getSourceNo().trim().isEmpty()){
+//                psMessage = "Transaction Source is not set.";
+//                return false;
+//            }
+//        }
         
         if(poEntity.getGCertNo()== null) {
             psMessage = "GC Number is not set.";
