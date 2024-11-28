@@ -17,6 +17,7 @@ public class ValidatorFactory {
         , SalesInvoice_Payment
         , SalesInvoice_Advances_Source
         , Credicard_Trans
+        , Gift_Check
         , VehicleSalesInvoice
         , CashierReceivables_Master
         , CashierReceivables_Detail
@@ -36,6 +37,8 @@ public class ValidatorFactory {
                 return new Validator_SalesInvoice_Advances_Source(foValue);
             case Credicard_Trans:
                 return new Validator_Creditcard_Trans(foValue);
+            case Gift_Check:
+                return new Validator_Gift_Check(foValue);
             case VehicleSalesInvoice:
                 return new Validator_VehicleSalesInvoice_Source(foValue);
             case CashierReceivables_Master:
