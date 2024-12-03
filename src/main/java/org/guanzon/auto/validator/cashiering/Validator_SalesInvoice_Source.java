@@ -14,21 +14,21 @@ import org.guanzon.appdriver.base.GRider;
 import org.guanzon.appdriver.base.MiscUtil;
 import org.guanzon.appdriver.base.SQLUtil;
 import org.guanzon.appdriver.constant.TransactionStatus;
-import org.guanzon.auto.model.cashiering.Model_SalesInvoice_Master;
+import org.guanzon.auto.model.cashiering.Model_SalesInvoice_Source;
 
 /**
  *
  * @author Arsiela
  */
-public class Validator_SalesInvoice_Master implements ValidatorInterface {
+public class Validator_SalesInvoice_Source implements ValidatorInterface {
 
     GRider poGRider;
     String psMessage;
     
-    Model_SalesInvoice_Master poEntity;
+    Model_SalesInvoice_Source poEntity;
     
-    public Validator_SalesInvoice_Master(Object foValue){
-        poEntity = (Model_SalesInvoice_Master) foValue;
+    public Validator_SalesInvoice_Source(Object foValue){
+        poEntity = (Model_SalesInvoice_Source) foValue;
     }
 
     @Override
@@ -49,92 +49,82 @@ public class Validator_SalesInvoice_Master implements ValidatorInterface {
         }
         
         if(poEntity.getReferNo()== null) {
-            psMessage = "Receipt No is not set.";
+            psMessage = "Reference No is not set.";
             return false;
         } else {
             if (poEntity.getReferNo().trim().isEmpty()){
-                psMessage = "Receipt No is not set.";
+                psMessage = "Reference No is not set.";
                 return false;
             }
         }
         
-        if(poEntity.getBranchCd()== null) {
-            psMessage = "Branch code is not set.";
+        if(poEntity.getSourceCD()== null) {
+            psMessage = "Source Code is not set.";
             return false;
         } else {
-            if (poEntity.getBranchCd().trim().isEmpty()){
-                psMessage = "Branch code is not set.";
+            if (poEntity.getReferNo().trim().isEmpty()){
+                psMessage = "Source Code is not set.";
                 return false;
             }
         }
         
-        if(poEntity.getDocType()== null) {
-            psMessage = "Document type is not set.";
+        if(poEntity.getSourceNo()== null) {
+            psMessage = "Source No is not set.";
             return false;
         } else {
-            if (poEntity.getDocType().trim().isEmpty()){
-                psMessage = "Document type is not set.";
+            if (poEntity.getSourceNo().trim().isEmpty()){
+                psMessage = "Source No is not set.";
                 return false;
             }
         }
         
-        if(poEntity.getClientID()== null) {
-            psMessage = "Payer is not set.";
+        if(poEntity.getTranType()== null) {
+            psMessage = "Transaction Type is not set.";
             return false;
         } else {
-            if (poEntity.getClientID().trim().isEmpty()){
-                psMessage = "Payer is not set.";
+            if (poEntity.getTranType().trim().isEmpty()){
+                psMessage = "Transaction Type is not set.";
                 return false;
             }
         }
         
-        if(poEntity.getTranTotl().compareTo(new BigDecimal("0.00")) <= 0){
-            psMessage = "Invalid Transaction Total.";
+        if(poEntity.getTranAmt().compareTo(new BigDecimal("0.00")) < 0) {
+            psMessage = "Invalid Transaction amount.";
             return false;
-        }
+        } 
         
-        if(poEntity.getNetTotal().compareTo(new BigDecimal("0.00")) <= 0){
-            psMessage = "Invalid Net Total.";
+        if(poEntity.getDiscount().compareTo(new BigDecimal("0.00")) < 0) {
+            psMessage = "Invalid Discount amount.";
             return false;
-        }
+        } 
         
-        if(!poEntity.getDocType().equals("0")){
-            if(poEntity.getCashAmt().compareTo(new BigDecimal("0.00")) <= 0
-                && poEntity.getChckAmt().compareTo(new BigDecimal("0.00")) <= 0
-                && poEntity.getCardAmt().compareTo(new BigDecimal("0.00")) <= 0
-                && poEntity.getOthrAmt().compareTo(new BigDecimal("0.00")) <= 0
-                && poEntity.getGiftAmt().compareTo(new BigDecimal("0.00")) <= 0){
-                psMessage = "Invalid Payer Mode Amount.";
-                return false;
-            }
-            if(poEntity.getAmtPaid().compareTo(new BigDecimal("0.00")) <= 0){
-                psMessage = "Invalid Amount Paid.";
-                return false;
-            }
-        }
-
-        try {
-            String lsID = "";
-            String lsSQL = poEntity.getSQL();
-            //Validate exisiting VSI Number
-            if(poEntity.getDocType().equals("0")){ //Vehicle Sales Invoice
-                lsSQL = MiscUtil.addCondition(lsSQL, " a.sReferNox = " + SQLUtil.toSQL(poEntity.getReferNo())
-                                                        +" AND a.sTransNox <> " + SQLUtil.toSQL(poEntity.getTransNo()));
-                                                       // +" AND a.cTranStat <> " + SQLUtil.toSQL(TransactionStatus.STATE_CANCELLED) ;
-                System.out.println("EXISTING VSI NO CHECK: " + lsSQL);
-                ResultSet loRS = poGRider.executeQuery(lsSQL);
-
-                if (MiscUtil.RecordCount(loRS) > 0){
-                        while(loRS.next()){
-                            lsID = loRS.getString("sReferNox");
-                        }
-
-                        MiscUtil.close(loRS);
-                        psMessage = "Found existing VSI No.\n\nSaving aborted." ;
-                        return false;
-                }
-            
-            }
+        if(poEntity.getNetAmt().compareTo(new BigDecimal("0.00")) < 0) {
+            psMessage = "Invalid Net amount.";
+            return false;
+        } 
+//        
+//        try {
+//            String lsID = "";
+//            String lsSQL = poEntity.getSQL();
+//            //Validate exisiting VSI Number
+//            if(poEntity.getDocType().equals("0")){ //Vehicle Sales Invoice
+//                lsSQL = MiscUtil.addCondition(lsSQL, " a.sReferNox = " + SQLUtil.toSQL(poEntity.getReferNo())
+//                                                        +" AND a.sTransNox <> " + SQLUtil.toSQL(poEntity.getTransNo()));
+//                                                       // +" AND a.cTranStat <> " + SQLUtil.toSQL(TransactionStatus.STATE_CANCELLED) ;
+//                System.out.println("EXISTING VSI NO CHECK: " + lsSQL);
+//                ResultSet loRS = poGRider.executeQuery(lsSQL);
+//
+//                if (MiscUtil.RecordCount(loRS) > 0){
+//                        while(loRS.next()){
+//                            lsID = loRS.getString("sReferNox");
+//                        }
+//
+//                        MiscUtil.close(loRS);
+//                        psMessage = "Found existing VSI No.\n\nSaving aborted." ;
+//                        return false;
+//                }
+//            
+//            }
             
 //            if(poEntity.getCancelld() != null){
 //                if(poEntity.getCancelld().trim().isEmpty()){
@@ -160,9 +150,9 @@ public class Validator_SalesInvoice_Master implements ValidatorInterface {
 //                    }  
 //                }
 //            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Validator_SalesInvoice_Master.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Validator_SalesInvoice_Source.class.getName()).log(Level.SEVERE, null, ex);
+//        } 
         return true;
     }
 
