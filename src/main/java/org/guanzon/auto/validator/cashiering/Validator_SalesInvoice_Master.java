@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import org.guanzon.appdriver.base.GRider;
 import org.guanzon.appdriver.base.MiscUtil;
 import org.guanzon.appdriver.base.SQLUtil;
+import org.guanzon.appdriver.constant.EditMode;
 import org.guanzon.appdriver.constant.TransactionStatus;
 import org.guanzon.auto.model.cashiering.Model_SalesInvoice_Master;
 
@@ -66,7 +67,12 @@ public class Validator_SalesInvoice_Master implements ValidatorInterface {
                 }
             }
 
-
+            
+            String lsOrigReceiptDte = poEntity.getOrigTransactDte();
+            if(lsOrigReceiptDte == null){
+                lsOrigReceiptDte = poEntity.getOrigTransactDte();
+            }
+            
             Date date = (Date) poEntity.getTransactDte();
             if (date == null) {
                 psMessage = "Invalid Receipt Date.";
@@ -90,80 +96,94 @@ public class Validator_SalesInvoice_Master implements ValidatorInterface {
                                          .toLocalDate();
 
             if(!poEntity.getDocType().equals("0")){
-                if (ldReceiptDte.isAfter(ldTranDte)) {
-                    psMessage = "Receipt Date should not be greater than the date current date.";
-                    return false;
-                }
+                if(!poEntity.getTranStat().equals(TransactionStatus.STATE_CANCELLED)){
+                    if(poEntity.getEditMode() == EditMode.ADDNEW || !lsOrigReceiptDte.equals(xsDateShort(date)) ){
+                        if (ldReceiptDte.isAfter(ldTranDte)) {
+                            psMessage = "Receipt Date should not be greater than the date current date.";
+                            return false;
+                        }
 
-                // Check if receipt date is prior to transaction date
-                if (ldReceiptDte.isBefore(ldTranDte)) {
-                    psMessage = "Receipt Date cannot be prior to current date.";
-                    return false;
-                }
+                        // Check if receipt date is prior to transaction date
+//                        if (ldReceiptDte.isBefore(ldTranDte)) {
+//                            psMessage = "Receipt Date cannot be prior to current date.";
+//                            return false;
+//                        }
                 
-                String lsCnt = "";
-                String lsSQL = " SELECT sValuexxx from xxxstandard_sets where sDescript = 'si_date_back_date_days' ";
-                System.out.println("EXISTING ALLOWABLE TO BACK DATE CHECK: " + lsSQL);
-                ResultSet loRS = poGRider.executeQuery(lsSQL);
+                        String lsCnt = "";
+                        String lsSQL = " SELECT sValuexxx from xxxstandard_sets where sDescript = 'si_date_back_date_days' ";
+                        System.out.println("EXISTING ALLOWABLE TO BACK DATE CHECK: " + lsSQL);
+                        ResultSet loRS = poGRider.executeQuery(lsSQL);
 
-                if (MiscUtil.RecordCount(loRS) > 0){
-                    while(loRS.next()){
-                        lsCnt = loRS.getString("sValuexxx");
-                    }
-                    MiscUtil.close(loRS);
-                    
-                    if(lsCnt != null){
-                        if(!lsCnt.isEmpty()){
+                        if (MiscUtil.RecordCount(loRS) > 0){
+                            while(loRS.next()){
+                                lsCnt = loRS.getString("sValuexxx");
+                            }
+                            MiscUtil.close(loRS);
+
+                            if(lsCnt != null){
+                                if(!lsCnt.isEmpty()){
+                                    Period lnPeriod = Period.between(ldReceiptDte, strToDate(xsDateShort(poGRider.getServerDate())));
+                                    if(Integer.valueOf(lsCnt) < lnPeriod.getDays()){
+                                        psMessage =  "Your Receipt Date has exceeded the allowable days for backdate of " + lsCnt + " days only.";
+                                        return false;
+                                    }
+                                }
+                            }     
+                        }
+                        
+                        //VALIDATE EXISTING RECEIPT NUMBER BASED ON RECEIPT DATE
+                        //Check if Receipt Number is already exist
+                        lsSQL = MiscUtil.addCondition( poEntity.makeSelectSQL(), " sReferNox = " + SQLUtil.toSQL(poEntity.getReferNo()));
+                        System.out.println("EXISTING ALLOWABLE TO REPEAT RECEIPT NUMBER CHECK: " + lsSQL);
+                        loRS = poGRider.executeQuery(lsSQL);
+
+                        if (MiscUtil.RecordCount(loRS) > 0){
+                            MiscUtil.close(loRS);    
+                            
+                            lsCnt = "12"; //set default into 1 year if no interval has been set
+                            lsSQL = " SELECT sValuexxx from xxxstandard_sets where sDescript = 'si_no_repetition_month_interval' ";
+                            System.out.println("EXISTING ALLOWABLE TO REPEAT RECEIPT NUMBER CHECK: " + lsSQL);
+                            loRS = poGRider.executeQuery(lsSQL);
+
+                            if (MiscUtil.RecordCount(loRS) > 0){
+                                while(loRS.next()){
+                                    lsCnt = loRS.getString("sValuexxx");
+                                }
+                                MiscUtil.close(loRS);     
+                            }
+
                             Period lnPeriod = Period.between(ldReceiptDte, strToDate(xsDateShort(poGRider.getServerDate())));
-                            if(Integer.valueOf(lsCnt) < lnPeriod.getDays()){
-                                psMessage =  "Your Receipt Date has exceeded the allowable days for backdate of " + lsCnt + " days only.";
+                            if(lnPeriod.getMonths() < Integer.valueOf(lsCnt)){
+                                String lsReceiptType = "";
+                                switch(poEntity.getDocType()){
+                                    case "1":
+                                        lsReceiptType = "CPSI";
+                                    break;
+                                    case "2":
+                                        lsReceiptType = "OR";
+                                    break;
+                                    case "3":
+                                    case "6":
+                                        lsReceiptType = "BSI";
+                                    break;
+                                    case "4":
+                                        lsReceiptType = "CR";
+                                    break;
+                                    case "5":
+                                        lsReceiptType = "PSI";
+                                    break;
+                                    case "7":
+                                        lsReceiptType = "AR";
+                                    break;
+                                }
+
+                                psMessage =  lsReceiptType +" No. " + poEntity.getReferNo() + " already exists!";
                                 return false;
                             }
-                        }
-                    }     
+                        }     
+                    }
                 }
                 
-                //VALIDATE EXISTING RECEIPT DATE
-                
-                
-//                lsCnt = "12"; //set default into 1 year if no interval has been set
-//                lsSQL = " SELECT sValuexxx from xxxstandard_sets where sDescript = 'si_no_repetition_month_interval' ";
-//                System.out.println("EXISTING ALLOWABLE TO REPEAT RECEIPT NUMBER CHECK: " + lsSQL);
-//                loRS = poGRider.executeQuery(lsSQL);
-//
-//                if (MiscUtil.RecordCount(loRS) > 0){
-//                    while(loRS.next()){
-//                        lsCnt = loRS.getString("sValuexxx");
-//                    }
-//                    MiscUtil.close(loRS);     
-//                }
-//                
-//                Period lnPeriod = Period.between(ldReceiptDte, strToDate(xsDateShort(poGRider.getServerDate())));
-//                if(Integer.valueOf(lsCnt) < lnPeriod.getMonths()){
-//                    String lsReceiptType = "";
-//                    switch(poEntity.getDocType()){
-//                        case "1":
-//                            
-//                        break;
-//                        case "2":
-//                            
-//                        break;
-//                        case "3":
-//                            
-//                        break;
-//                        case "4":
-//                            
-//                        break;
-//                        case "5":
-//                            
-//                        break;
-//                    }
-//                    
-//                    psMessage =  lsReceiptType +" No. " + poEntity.getReferNo() + " already exists!";
-//                    return false;
-//                }
-                
-
             } 
 
             if(poEntity.getBranchCd()== null) {
