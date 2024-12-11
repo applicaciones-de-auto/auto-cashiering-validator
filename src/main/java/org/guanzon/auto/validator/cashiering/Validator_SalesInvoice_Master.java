@@ -133,7 +133,9 @@ public class Validator_SalesInvoice_Master implements ValidatorInterface {
                         
                         //VALIDATE EXISTING RECEIPT NUMBER BASED ON RECEIPT DATE
                         //Check if Receipt Number is already exist
-                        lsSQL = MiscUtil.addCondition( poEntity.makeSelectSQL(), " sReferNox = " + SQLUtil.toSQL(poEntity.getReferNo()));
+                        lsSQL = MiscUtil.addCondition( poEntity.makeSelectSQL(), " sReferNox = " + SQLUtil.toSQL(poEntity.getReferNo())
+                                                                                +" AND cDocTypex = " + SQLUtil.toSQL(poEntity.getDocType())
+                                                                                +" AND sTransNox <> " + SQLUtil.toSQL(poEntity.getTransNo()));
                         System.out.println("EXISTING ALLOWABLE TO REPEAT RECEIPT NUMBER CHECK: " + lsSQL);
                         loRS = poGRider.executeQuery(lsSQL);
 
@@ -246,7 +248,8 @@ public class Validator_SalesInvoice_Master implements ValidatorInterface {
             //Validate exisiting VSI Number
             if(poEntity.getDocType().equals("0")){ //Vehicle Sales Invoice
                 lsSQL = MiscUtil.addCondition(lsSQL, " a.sReferNox = " + SQLUtil.toSQL(poEntity.getReferNo())
-                                                        +" AND a.sTransNox <> " + SQLUtil.toSQL(poEntity.getTransNo()));
+                                                        +" AND a.sTransNox <> " + SQLUtil.toSQL(poEntity.getTransNo())
+                                                        +" AND a.cDocTypex = " + SQLUtil.toSQL(poEntity.getDocType()));
                                                        // +" AND a.cTranStat <> " + SQLUtil.toSQL(TransactionStatus.STATE_CANCELLED) ;
                 System.out.println("EXISTING VSI NO CHECK: " + lsSQL);
                 ResultSet loRS = poGRider.executeQuery(lsSQL);
